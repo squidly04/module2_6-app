@@ -40,13 +40,30 @@ const animals = [
 ];
 
 function AnimalComponent (props) {
+  let {name, number, eats} = props;
   return (
     <div>
-      <h1>{props.name}</h1>
-      <p>{props.number}</p>
+      <h1>{name}</h1>
+      <p>{number}</p>
     </div>
   )
 }
+
+function sumAll(...args){
+  // args is the name for the array
+  let sum = 0;
+  for(let arg of args) {
+    sum+=arg;
+  }
+
+  return sum;
+}
+
+/* 
+{alert(sumAll(1))}
+{alert(sumAll(1, 2))}
+{alert(sumAll(1, 2, 3))} 
+*/
 
 function App() {
   return (
@@ -57,7 +74,7 @@ function App() {
 
         {
           animals.map(animal => (
-            <AnimalComponent name={animal.name} number={animal.number} />
+            <AnimalComponent {...animal} />
         ))
         }
         <a
