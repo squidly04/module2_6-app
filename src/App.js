@@ -1,5 +1,6 @@
 import logo from './QUT-logo.png'; //'./logo.svg';
 import './App.css';
+import React, {useState} from 'react';
 
 const animals = [
   {
@@ -65,11 +66,40 @@ function sumAll(...args){
 {alert(sumAll(1, 2, 3))} 
 */
 
+function LikeCounter() {
+  const [count, setcount] = useState(0);
+  const increment = () => {
+    setcount((oldCount) => oldCount + 1);
+  };
+  const decrement = () => {
+    setcount((oldCount) => oldCount - 1);
+  }
+
+  return (
+    <div>
+      <p>Like count: {count}</p>
+      <button onClick={increment}>Like</button>
+      <button onClick={decrement}>Dislike</button>
+    </div>
+  )
+}
+
+function Headline(props){
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <LikeCounter />
+    </div>
+  )
+}
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+      
+      {
+        /* <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <h1> Queensland University of Technology </h1>
 
         {
@@ -84,8 +114,12 @@ function App() {
           rel="noopener noreferrer"
         >
           Visit Us
-        </a>
-      </header>
+        </a> 
+        </header>*/
+      }
+        
+        <Headline title="Hello World!" />
+        <Headline title="Cruel World" />
     </div>
   );
 }
