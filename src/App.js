@@ -94,6 +94,12 @@ function Headline(props){
 }
 
 function App() {
+  const headlines = [
+    {title:'My first headline', url:'https://news.com/first-title'},
+    {title:'My second headline', url:'https://news.com/second-title'},
+    {title:'My third headline', url:'https://news.com/third-title'}
+  ]
+
   return (
     <div className="App">
       
@@ -117,9 +123,14 @@ function App() {
         </a> 
         </header>*/
       }
-        
+        {headlines.map(headline => (
+          <Headline key={headline.url} title={headline.title} />
+        ))}
+
+        {/* 
         <Headline title="Hello World!" />
         <Headline title="Cruel World" />
+        */}
     </div>
   );
 }
