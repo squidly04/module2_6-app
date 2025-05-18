@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const API_KEY = '8664ff9ab505442c878d5918f19f09fd'; // dde09fef5dfd4b1698c16f9cd8b49b84
+const API_KEY = 
 
-async function getHeadlines() {
-    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+async function getHeadlines(search) {
+    let url = 'https://newsapi.org/v2/';
     
+    if (search === '') {
+      url += `/top-headlines?country=us&apiKey=${API_KEY}`;
+    }
+    else {
+      url += `/everything?q=${search}&apiKey=${API_KEY}`;
+    }
+    
+console.log(url);
+
     let res = await fetch(url);
     let data = await res.json();
     let articles = data.articles;
@@ -16,7 +25,7 @@ async function getHeadlines() {
     }));
 }
 
-export function useNewsArticles() {
+export function useNewsArticles(search) {
   const [loading, setLoading] = useState(true);
   const [headlines, setHeadlines] = useState([]);
   const [error, setError] = useState(null);
@@ -24,14 +33,14 @@ export function useNewsArticles() {
   useEffect(() => {
     (async () => {
       try {
-        setHeadlines(await getHeadlines());
+        setHeadlines(await getHeadlines(search));
         setLoading(false);
       } catch (err) {
         setError(err);
         setLoading(false);
       }
     })();
-  }, []);
+  }, [search]);
 
   return {
     loading,

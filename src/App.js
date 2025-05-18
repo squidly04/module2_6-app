@@ -29,8 +29,32 @@ function Headline(props){
   )
 }
 
+function SearchBar(props){
+  const [innerSearch, setInnerSearch] = useState("");
+
+  return (
+    <div>
+      <input aria-labelledby="search-button"
+             name="search"
+             id="search"
+             type="search"
+             value={innerSearch}
+             onChange={e => setInnerSearch(e.target.value)}
+      />
+
+      <button id="search-button"
+              type="button"
+              onClick={() => props.onSubmit(innerSearch)}
+      >
+        Search
+      </button>
+    </div>
+  )
+}
+
 function App() {
-  const {loading, headlines, error} = useNewsArticles();
+  const [search, setSearch] = useState("");
+  const {loading, headlines, error} = useNewsArticles(search);
 
   if (loading) {
     return <p>Loading....</p>
@@ -42,6 +66,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1>News Headlines</h1>
+      <SearchBar onSubmit={setSearch} />
       { headlines.map((headline) => (
           <Headline key={headline.url} title={headline.title} /> 
       )) }
